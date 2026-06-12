@@ -1240,3 +1240,9 @@ def benchmark(k: int = Query(default=10, ge=1, le=50)) -> dict[str, object]:
         "dashboard": str(html_path),
     }
     return report
+import os
+import uvicorn
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
