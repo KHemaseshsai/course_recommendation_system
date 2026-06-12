@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Course Discovery Engine | Personalized Course Recommendations</title>
+    <meta name="description" content="Discover the best online courses for your career goals with AI-powered recommendations based on skill level, learning style, time availability, language, and platform preferences.">
+    <meta name="keywords" content="AI course recommendation, personalized learning, online courses, career roadmap, upskilling, full stack developer, data science, cybersecurity, UX design">
+    <meta name="author" content="AI Course Discovery Engine">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ff6b35">
+    <link rel="canonical" href="/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI Course Discovery Engine | Personalized Course Recommendations">
+    <meta property="og:description" content="Get ranked online course recommendations tailored to your goal, level, time availability, language, and preferred platform.">
+    <meta property="og:url" content="/">
+    <meta property="og:site_name" content="AI Course Discovery Engine">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AI Course Discovery Engine | Personalized Course Recommendations">
+    <meta property="twitter:description" content="Find the most relevant online courses for full stack development, data science, cybersecurity, UX, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="hero-shell">
+            <div class="hero-copy">
+                <h1>AI Course Discovery & Personalized Recommendation Engine</h1>
+                <p>Turn a student's goal, current level, available time, and learning preference into a ranked shortlist with plain-language explanations, peer-signal summaries, and side-by-side comparison.</p>
+            </div>
+        </section>
+
+        <section class="glass-card section-intro">
+            <div>
+                <p class="section-title">Student Intake</p>
+                <p class="section-copy">Describe the learner, then let the engine rank the best-fit paths instead of just the most popular ones.</p>
+            </div>
+        </section>
+
+        <section class="intake-panel">
+            <form id="recommendationForm">
+                <div class="form-grid form-grid-large">
+                    <label class="field field-span-2">
+                        <span>Student goal</span>
+                        <textarea id="goal" name="goal" rows="5" placeholder="Examples: crack GATE for CSE AI topics, build ML projects for placements, get job-ready in data science in 3 months"></textarea>
+                    </label>
+
+                    <label class="field">
+                        <span>Current level</span>
+                        <select id="level" name="level"></select>
+                    </label>
+                </div>
+
+                <div class="form-grid form-grid-three">
+                    <label class="field">
+                        <span>Learning style</span>
+                        <select id="learning_style" name="learning_style"></select>
+                    </label>
+
+                    <label class="field">
+                        <span>Delivery preference</span>
+                        <select id="delivery_preference" name="delivery_preference"></select>
+                    </label>
+
+                    <label class="field">
+                        <span>Certificate needed?</span>
+                        <select id="certificate_preference" name="certificate_preference"></select>
+                    </label>
+                </div>
+
+                <div class="form-grid form-grid-three">
+                    <label class="field">
+                        <span>Time availability</span>
+                        <select id="time_commitment" name="time_commitment"></select>
+                    </label>
+
+                    <label class="field">
+                        <span>Budget</span>
+                        <select id="budget_preference" name="budget_preference"></select>
+                    </label>
+
+                    <label class="field">
+                        <span>Preferred platform</span>
+                        <select id="preferred_platform" name="preferred_platform"></select>
+                    </label>
+                </div>
+
+                <div class="form-grid form-grid-three">
+                    <label class="field">
+                        <span>Number of recommendations</span>
+                        <div class="range-wrap">
+                            <input id="limit" name="limit" type="range" min="3" max="9" value="6">
+                            <strong id="limitValue">6</strong>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="submit-row">
+                    <button type="submit" class="primary-button" id="submitButton">Generate Personalized Recommendations</button>
+                </div>
+            </form>
+
+            <div id="statusBanner" class="status-banner hidden" aria-live="polite"></div>
+        </section>
+
+        <section id="resultsSection" class="results-shell hidden">
+            <div class="metric-grid">
+                <article class="metric-tile">
+                    <div class="metric-label">Matches found</div>
+                    <div class="metric-value" id="matchesFound">0</div>
+                </article>
+                <article class="metric-tile">
+                    <div class="metric-label">Preferred profile</div>
+                    <div class="metric-value metric-small" id="preferredProfile">-</div>
+                </article>
+                <article class="metric-tile">
+                    <div class="metric-label">Availability focus</div>
+                    <div class="metric-value metric-small" id="availabilityFocus">-</div>
+                </article>
+            </div>
+
+            <article class="summary-card">
+                <div class="section-title">AI Recommendation Coach</div>
+                <p class="section-copy" id="coachMessage"></p>
+                <div class="profile-pill-row" id="activeFilters"></div>
+            </article>
+
+            <section class="tabs-shell">
+                <div class="tab-list">
+                    <button type="button" class="tab-button active" data-tab="dashboard">Discovery Dashboard</button>
+                    <button type="button" class="tab-button" data-tab="compare">Compare Top 3</button>
+                    <button type="button" class="tab-button" data-tab="refine">Refine</button>
+                </div>
+
+                <div id="dashboard" class="tab-panel active">
+                    <div class="dashboard-grid">
+                        <div>
+                            <article class="glass-card">
+                                <div class="section-title">Recommendation Strength</div>
+                                <p class="section-copy">A cleaner view of how strongly each course matches the current student profile.</p>
+                            </article>
+                            <article class="chart-card">
+                                <div id="chartBars" class="chart-bars"></div>
+                            </article>
+                        </div>
+
+                        <article class="summary-card best-match-card">
+                            <div class="section-title">Best Overall Match</div>
+                            <h3 id="bestCourseTitle"></h3>
+                            <p class="section-copy" id="bestCourseReason"></p>
+                            <p class="section-copy best-meta" id="bestCourseMeta"></p>
+                        </article>
+                    </div>
+
+                    <div id="courseGrid" class="course-grid"></div>
+                </div>
+
+                <div id="compare" class="tab-panel">
+                    <article class="glass-card">
+                        <div class="section-title">Side-by-Side Comparison</div>
+                        <p class="section-copy">Compare the top recommendations across decision-making dimensions before choosing one.</p>
+                    </article>
+
+                    <div id="compareCards" class="compare-grid"></div>
+                    <div id="comparisonTableWrap" class="table-wrap"></div>
+                </div>
+
+                <div id="refine" class="tab-panel">
+                    <article class="glass-card">
+                        <div class="section-title">Conversational Refinement</div>
+                        <p class="section-copy">Use these AI-generated prompts to quickly steer the shortlist without starting over.</p>
+                    </article>
+
+                    <div id="promptList" class="prompt-list"></div>
+                    <div class="info-note">Update any preference above and click Generate Personalized Recommendations again to refine the shortlist.</div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

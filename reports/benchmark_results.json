@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-06-06T09:22:55.269901+00:00",
+  "protocol": "deterministic catalog relevance with synthetic implicit-feedback personas",
+  "random_seed": 42,
+  "k": 10,
+  "scenario_count": 8,
+  "catalog_size": 5275,
+  "models": [
+    {
+      "model": "tfidf",
+      "precision_at_k": 0.9,
+      "recall_at_k": 0.0465,
+      "map_at_k": 0.8719,
+      "ndcg_at_k": 0.9229,
+      "diversity": 0.1106,
+      "popularity_bias": 0.4678,
+      "coverage": 0.0146
+    },
+    {
+      "model": "semantic_search",
+      "precision_at_k": 0.775,
+      "recall_at_k": 0.0397,
+      "map_at_k": 0.6466,
+      "ndcg_at_k": 0.7361,
+      "diversity": 0.2978,
+      "popularity_bias": 0.342,
+      "coverage": 0.0133
+    },
+    {
+      "model": "hybrid",
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.0532,
+      "map_at_k": 1.0,
+      "ndcg_at_k": 1.0,
+      "diversity": 0.0,
+      "popularity_bias": 0.668,
+      "coverage": 0.0119
+    },
+    {
+      "model": "collaborative_filtering",
+      "precision_at_k": 0.625,
+      "recall_at_k": 0.0351,
+      "map_at_k": 0.625,
+      "ndcg_at_k": 0.625,
+      "diversity": 0.1278,
+      "popularity_bias": 0.405,
+      "coverage": 0.015
+    },
+    {
+      "model": "hybrid_collaborative",
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.0532,
+      "map_at_k": 1.0,
+      "ndcg_at_k": 1.0,
+      "diversity": 0.0,
+      "popularity_bias": 0.6209,
+      "coverage": 0.0127
+    }
+  ],
+  "versions": {
+    "recommendation_version": "4.0.0",
+    "ranking_version": "behavioral-hybrid-v2",
+    "sentence_transformer_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "dataset_version": "bee97a2214874172",
+    "embeddings_version": "49ae1b9a4174f306",
+    "faiss_index_version": "73766a65d8e741fb",
+    "ranking_config_version": "a0fb89f308a8eff9",
+    "ranking_weights": {
+      "semantic_similarity": 0.32,
+      "user_preference_match": 0.22,
+      "behavioral_profile_score": 0.16,
+      "popularity_score": 0.1,
+      "rating_score": 0.08,
+      "collaborative_score": 0.12
+    },
+    "generated_at": "2026-06-06T09:22:55.301236+00:00"
+  }
+}
